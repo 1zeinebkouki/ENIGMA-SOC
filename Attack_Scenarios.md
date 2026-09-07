@@ -52,13 +52,13 @@ A correlated alert (severity level 10) was generated for multiple firewall block
 
 A machine learning text-classification model analyzes incoming emails to detect phishing attempts. Flagged emails are labeled and quarantined in Gmail rather than left in the inbox.
 
-![Original phishing simulation email](./images/phishing_original_email.png)
+![Original phishing simulation email](./images/phishing_original_email.jpg)
 
-![Phishing email flagged with confidence score and quarantined](./images/phishing_quarantine_result.png)
+![Phishing email flagged with confidence score and quarantined](./images/phishing_quarantine_result.jpg)
 
 The system assigned an 80% phishing confidence score, identified the suspicious link, and explained the flagging reason (urgency + unverified link). The email was moved out of the inbox and tagged for review rather than auto-deleted, allowing a user to restore it if misclassified.
 
-![Gmail labels: analyzed, quarantine, scanned](./images/phishing_gmail_labels.png)
+![Gmail labels: analyzed, quarantine, scanned](./images/phishing_gmail_labels.jpg)
 
 Three labels structure the pipeline: `PHISHING_SCANNED` (processed), `PHISHING_ANALYZED` (classification complete), and `PHISHING_QUARANTINE` (flagged and isolated).
 
