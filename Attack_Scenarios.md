@@ -8,7 +8,7 @@ Each scenario below documents what was reproduced in the lab, what Wazuh/Shuffle
 
 Reproduction steps: multiple failed SSH login attempts followed by a successful authentication.
 
-![Shuffle "SSH login failed" workflow](./Attack_Scenarios_images/shuffle_ssh_login_workflow.png)
+![Shuffle "SSH login failed" workflow](./images/shuffle_ssh_login_workflow.png)
 
 The workflow is triggered by a Wazuh webhook and chains through alert enrichment, TheHive case creation, and (where configured) a containment step. The workflow structure is confirmed; a full timing measurement (detection-to-containment) was not captured.
 
@@ -18,17 +18,17 @@ The workflow is triggered by a Wazuh webhook and chains through alert enrichment
 
 Scenario: an unauthorized attempt to access a restricted file share (`BankShares\Finance`).
 
-![Windows access denied to Finance share](./Attack_Scenarios_images/windows_access_denied_finance.png)
+![Windows access denied to Finance share](./images/windows_access_denied_finance.png)
 
 The access denial confirms that Windows file permissions blocked the attempt. This is a result of existing NTFS permissions — it does not, by itself, demonstrate that the SOAR pipeline dynamically triggered the block.
 
-![Custom Wazuh rule for Finance share access (Event ID 4663)](./Attack_Scenarios_images/wazuh_rule_accesstofinance.png)
+![Custom Wazuh rule for Finance share access (Event ID 4663)](./images/wazuh_rule_accesstofinance.png)
 
 A custom Wazuh rule detects Event ID 4663 (object access attempt) on the Finance share and assigns it severity level 10.
 
-![Wazuh Windows events during the access test](./Attack_Scenarios_images/wazuh_windows_events.png)
+![Wazuh Windows events during the access test](./images/wazuh_windows_events.png)
 
-![Shuffle "AccessToFinance" workflow](./Attack_Scenarios_images/shuffle_accesstofinance_workflow.png)
+![Shuffle "AccessToFinance" workflow](./images/shuffle_accesstofinance_workflow.png)
 
 **What remains to validate:** linking a specific access attempt to the triggering account, the Windows event, the Wazuh rule, and the resulting TheHive case in a single traceable chain — and confirming that a legitimate, authorized user retains access (to rule out a false-positive lockout).
 
@@ -36,13 +36,13 @@ A custom Wazuh rule detects Event ID 4663 (object access attempt) on the Finance
 
 A defensive detection exercise — this project does not reproduce credential-extraction techniques, only the detection and alerting path.
 
-![Shuffle "mimikatz_Final" workflow](./Attack_Scenarios_images/shuffle_mimikatz_workflow.png)
+![Shuffle "mimikatz_Final" workflow](./images/shuffle_mimikatz_workflow.png)
 
 The workflow chains Wazuh alert ingestion, TheHive case creation, and an email notification step. Email notifications were confirmed as received (SOC alert channel) — this is separate from and does not validate the MidPoint Joiner welcome-email pipeline, which uses a different configuration and remains unresolved (see [`LIMITATIONS.md`](./LIMITATIONS.md)).
 
 ## Network / Firewall Correlation Scenario
 
-![Shuffle alert: repeated firewall blocks from the same source](./Attack_Scenarios_images/shuffle_firewall_alert.png)
+![Shuffle alert: repeated firewall blocks from the same source](./images/shuffle_firewall_alert.png)
 
 A correlated alert (severity level 10) was generated for multiple firewall block events from a single source, tagged with a brute-force technique reference. This confirms that a network event reached the orchestrator with a MITRE tag attached — it does not confirm that a DDoS attack was identified via a trained detection model, or that automated containment executed. The classification (brute-force vs. volumetric attack) should be re-evaluated against raw logs, request volume, and network context before being reported as a confirmed DDoS detection.
 
