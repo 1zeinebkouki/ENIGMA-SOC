@@ -11,7 +11,7 @@ The lab environment is segmented into four zones:
 
 Traffic between zones passes through firewall/segmentation devices (pfSense at the WAN/DMZ boundary, OPNsense for internal segmentation). The exact production firewall topology (single device vs. cascade) was not finalized in this lab — see [`LIMITATIONS.md`](../LIMITATIONS.md).
 
-![ENIGMA Architecture](./ENIGMA_Architecture.png)
+![ENIGMA Architecture](./images/ENIGMA_Architecture.png)
 
 ## SOC Components
 
