@@ -50,22 +50,25 @@ A correlated alert (severity level 10) was generated for multiple firewall block
 
 **MITRE ATT&CK:** T1566 (Phishing)
 
-A machine learning text-classification model analyzes incoming emails to detect phishing attempts. When an email is classified as phishing:
+A machine learning text-classification model analyzes incoming emails to detect phishing attempts. Flagged emails are labeled and quarantined in Gmail rather than left in the inbox.
 
-1. The message is automatically moved to the trash folder
-2. The user receives a notification alerting them that a phishing email was detected and instructing them not to click any links it contained
+![Original phishing simulation email](./images/phishing_original_email.png)
 
-![Email moved to trash](./images/phishing_email_trash.png)
+![Phishing email flagged with confidence score and quarantined](./images/phishing_quarantine_result.png)
 
-![User notification of detected phishing attempt](./images/phishing_user_notification.png)
+The system assigned an 80% phishing confidence score, identified the suspicious link, and explained the flagging reason (urgency + unverified link). The email was moved out of the inbox and tagged for review rather than auto-deleted, allowing a user to restore it if misclassified.
 
-**What this demonstrates:** the classification model correctly flagged the test email, and the automated response (move to trash + notify) executed as designed in this test run.
+![Gmail labels: analyzed, quarantine, scanned](./images/phishing_gmail_labels.png)
+
+Three labels structure the pipeline: `PHISHING_SCANNED` (processed), `PHISHING_ANALYZED` (classification complete), and `PHISHING_QUARANTINE` (flagged and isolated).
+
+**What this demonstrates:** the classification model correctly flagged a simulated phishing email, extracted and scored the embedded link, and applied a quarantine label — on this one test case.
 
 **What remains to validate:**
 - Classification accuracy across a labeled dataset (precision/recall), rather than a single test case
-- False positive rate — legitimate emails incorrectly flagged as phishing
+- False positive rate — legitimate emails incorrectly quarantined
 - Behavior on borderline or evasive phishing attempts (e.g. lookalike domains, no obvious keywords)
-- Whether the "do not click the link" notification reaches the user through a channel that itself resists spoofing
+- Whether end users are separately notified, or only see the effect via the quarantine label
 
 ## Compliance & MITRE ATT&CK References
 
