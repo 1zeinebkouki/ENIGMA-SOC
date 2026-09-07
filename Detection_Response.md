@@ -6,8 +6,6 @@ The SOC pipeline follows a five-stage flow: **collection → detection → orche
 
 ## Wazuh (SIEM)
 
-![Wazuh overview dashboard](./images/wazuh_overview.png)
-
 Wazuh centralizes log collection from Windows, Linux, and network sources, and applies both built-in and custom detection rules.
 
 **Custom rules implemented:**
@@ -57,8 +55,6 @@ Two separate enrichment paths were tested:
 ![Shuffle VirusTotal call, HTTP 200](./images/shuffle_virustotal_success.png)
 
 - **Direct VirusTotal call via Shuffle**: succeeded (HTTP 200, file report returned).
-
-![Cortex analyzer job failure](./images/cortex_job_failure.png)
 
 - **Cortex analyzer job (VirusTotal_GetReport)**: failed in testing. The cause was not diagnosed in this lab cycle — the two paths are tracked separately rather than assumed to share the same root cause.
 
