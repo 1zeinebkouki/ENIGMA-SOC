@@ -46,6 +46,27 @@ The workflow chains Wazuh alert ingestion, TheHive case creation, and an email n
 
 A correlated alert (severity level 10) was generated for multiple firewall block events from a single source, tagged with a brute-force technique reference. This confirms that a network event reached the orchestrator with a MITRE tag attached — it does not confirm that a DDoS attack was identified via a trained detection model, or that automated containment executed. The classification (brute-force vs. volumetric attack) should be re-evaluated against raw logs, request volume, and network context before being reported as a confirmed DDoS detection.
 
+## Phishing Detection Scenario
+
+**MITRE ATT&CK:** T1566 (Phishing)
+
+A machine learning text-classification model analyzes incoming emails to detect phishing attempts. When an email is classified as phishing:
+
+1. The message is automatically moved to the trash folder
+2. The user receives a notification alerting them that a phishing email was detected and instructing them not to click any links it contained
+
+![Email moved to trash](./images/phishing_email_trash.png)
+
+![User notification of detected phishing attempt](./images/phishing_user_notification.png)
+
+**What this demonstrates:** the classification model correctly flagged the test email, and the automated response (move to trash + notify) executed as designed in this test run.
+
+**What remains to validate:**
+- Classification accuracy across a labeled dataset (precision/recall), rather than a single test case
+- False positive rate — legitimate emails incorrectly flagged as phishing
+- Behavior on borderline or evasive phishing attempts (e.g. lookalike domains, no obvious keywords)
+- Whether the "do not click the link" notification reaches the user through a channel that itself resists spoofing
+
 ## Compliance & MITRE ATT&CK References
 
 Standards references (ISO/IEC 27001, PCI DSS, SWIFT CSP) and MITRE ATT&CK technique tags shown in TheHive case descriptions reflect the lab's rule configuration. These are configured associations, not the result of an independent compliance audit — see [`Compliance.md`](./Compliance.md) for the full discussion.
